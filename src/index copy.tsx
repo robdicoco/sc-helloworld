@@ -4,10 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Helloworld } from './contracts/helloworld';
-import artifact from '../artifacts/helloworld.json';
-Helloworld.loadArtifact(artifact);
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
