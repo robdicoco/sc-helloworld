@@ -5,11 +5,13 @@ import './App.css';
 import { DefaultProvider, sha256, toHex, PubKey, bsv, TestWallet, Tx, toByteString } from "scrypt-ts";
 import { Helloworld } from "./contracts/helloworld";
 
+import { userHomePrivateKey } from './env';
 
 const provider = new DefaultProvider({network: bsv.Networks.testnet});
 let Alice: TestWallet
 let signerExt: TestWallet
-const privateKey = bsv.PrivateKey.fromHex("3c2ffdbb0a57c0cff0deacba15a92bf1d218dda9a9c7c668dd0640a6204b6394", bsv.Networks.testnet)   
+
+const privateKey = bsv.PrivateKey.fromHex(userHomePrivateKey, bsv.Networks.testnet)   
 
 function App() {
 
@@ -19,10 +21,12 @@ function App() {
 
     try {
       const signer = Alice
-      const message = toByteString('hello world', true)
+      const message = toByteString('hello world rob', true)
       const instance = new Helloworld(sha256(message))
       
       await instance.connect(signer);
+
+      console.log('Alice: ', signer.addresses)
           
       const deployTx = await instance.deploy(100)
       //console.log('Helloworld contract deployed: ', deployTx.id)
@@ -37,8 +41,8 @@ function App() {
 
 
     } catch (e) {
-      console.error('deploy HelloWorld failes', e)
-      alert('deploy HelloWorld failes')
+      console.error('deploy HelloWorld failed', e)
+      alert('deploy HelloWorld failed')
     }
   };
 
@@ -50,7 +54,7 @@ function App() {
     try {
 
       const signer = Alice
-      const message = toByteString('hello world', true)
+      const message = toByteString('hello world rob', true)
       let tx = new bsv.Transaction
       tx = await provider.getTransaction(txid.current.value)
   
@@ -64,8 +68,8 @@ function App() {
       alert('unlock: ' + callTx.id)
   
     } catch (e) {
-      console.error('deploy HelloWorld failes', e)
-      alert('deploy HelloWorld failes')
+      console.error('deploy HelloWorld failed', e)
+      alert('deploy HelloWorld failed')
     }
   };
 
